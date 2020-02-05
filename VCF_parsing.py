@@ -23,6 +23,7 @@ with open("vep_impact.csv") as csv_file:
             class_impact[row[0]] = row[1]
 
 # Level of impact
+# Priority for impact of VEP annotation
 dict_impact = {"HIGH": 4, "MODERATE":3, "LOW":2, "MODIFIER":1, "NA":0}
 
 with open("Challenge_data.vcf", "r") as f1, open("output_vcf_03_02.txt", "w") as f2:
@@ -35,6 +36,7 @@ with open("Challenge_data.vcf", "r") as f1, open("output_vcf_03_02.txt", "w") as
             ref = line[3]
             alt = line[4].split(",")
             extra = line[7].split(";")
+            # extract data from vcf
             DPs = extra[7].split("DP=", 1)[1].split(",")
             AOs = extra[5].split("AO=", 1)[1].split(",")
             DP = int(DPs[0])
@@ -47,11 +49,13 @@ with open("Challenge_data.vcf", "r") as f1, open("output_vcf_03_02.txt", "w") as
                     parsed_json = json.loads(r.text)
                     for feature in parsed_json[string]:
                         if feature == "variant":
+                            # extract allele frequency
                             if "allele_freq" in parsed_json[string][feature]:
                                 freq = [str(parsed_json[string][feature]["allele_freq"])]
                             else:
                                 freq = ["NA"]
                             if "vep_annotations" in parsed_json[string][feature]:
+                                # extract VEP annotation consequences and biotype
                                 vep_annot = parsed_json[string][feature]["vep_annotations"]
                                 total_conseqs = [annot["major_consequence"] for annot in vep_annot]
                                 total_impact_conseq = []
