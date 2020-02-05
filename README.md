@@ -6,7 +6,9 @@ In case of multiple consequences per variant the script prioritizes and picks th
 
 For ties, the script will report all cases from the most impactful category.
 
-In the case of multiple variants at a single position, the script will evaluate each variant independently and report them in multiple lines
+In the case of multiple variants at a single position, the script will evaluate each variant independently and report them in multiple lines.
+
+This file needs vep_impact.csv that contains the impact of VEP consequences
 
 Usage:
 python VCF_parsing.py
